@@ -17,7 +17,7 @@
     "bin",
     "lib",
     "db",
-    "cache/tree.json"
+    "lib/tree.json"
   ],
   "keywords": [
     "imi"
