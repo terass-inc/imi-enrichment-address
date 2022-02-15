@@ -73,11 +73,15 @@ const server = http.createServer((req, res) => {
 server.listen(port, () => {
   console.log(`imi-enrichment-address-server is running on port ${port}`);
 });
-server.on('close', function() {
-  //enrichment.disconnect();
+
+server.on("close", () => {
+  enrichment.disconnect();
 });
 
-process.on('SIGINT', function() {
+process.on("SIGINT", () => {
   server.close();
-  //enrichment.disconnect();
+});
+
+process.on("SIGTERM", () => {
+  server.close();
 });
