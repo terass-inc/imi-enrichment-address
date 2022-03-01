@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const enrichment = require("../main");
+const EnrichmentAddress = require("../main");
 const http = require("http");
 
 if (process.argv.length < 3 || !process.argv[2].match(/^[1-9][0-9]*$/)) {
@@ -9,6 +9,7 @@ if (process.argv.length < 3 || !process.argv[2].match(/^[1-9][0-9]*$/)) {
 }
 
 const port = parseInt(process.argv[2]);
+const enrichment = new EnrichmentAddress();
 
 const server = http.createServer((req, res) => {
   if (req.method === "GET") {
@@ -52,7 +53,7 @@ const server = http.createServer((req, res) => {
         return;
       }
     }
-    enrichment(input).then(json => {
+    enrichment.convert(input).then(json => {
       res.writeHead(200, {
         "Content-Type": "application/json",
         "Access-Control-Allow-Origin": "*"
@@ -71,4 +72,16 @@ const server = http.createServer((req, res) => {
 });
 server.listen(port, () => {
   console.log(`imi-enrichment-address-server is running on port ${port}`);
+});
+
+server.on("close", () => {
+  enrichment.disconnect();
+});
+
+process.on("SIGINT", () => {
+  server.close();
+});
+
+process.on("SIGTERM", () => {
+  server.close();
 });
