@@ -10,6 +10,10 @@ const leveldown = require('leveldown');
 // 住所から緯度経度付き場所型を返す
 class EnrichmentAddress {
   constructor() {
+    const path = __dirname + "/db/LOCK";
+    if (fs.existsSync(path)) {
+      fs.unlinkSync(path);
+    }
     this.db = levelup(leveldown(__dirname + "/db"));
   }
   disconnect() {
