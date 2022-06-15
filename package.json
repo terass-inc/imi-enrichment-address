@@ -1,6 +1,6 @@
 {
   "name": "imi-enrichment-address",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "IMI 住所型正規化パッケージ(並列対応)",
   "main": "main.js",
   "scripts": {
@@ -27,7 +27,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^8.2.1",
-    "node-fetch": "^2.6.1"
+    "node-fetch": "^2.6.7"
   },
   "dependencies": {
     "command-line-args": "^5.1.1",

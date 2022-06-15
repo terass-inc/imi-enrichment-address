@@ -1,31 +1,35 @@
-const enrich = require("../main");
-const expect = require('chai').expect;
-const fs = require('fs');
+const expect = require("chai").expect;
+const fs = require("fs");
+
+const enrichmentAddress = require("../main");
+
 const spec = __dirname + "/../spec";
+const enrich = (text) => enrichmentAddress.convert(text);
 
-
-describe('imi-enrichment-address#main', function() {
-
-  describe("spec", function() {
-    fs.readdirSync(spec).filter(file => file.match(/json$/)).forEach(file => {
-      describe(file, function() {
-        const json = JSON.parse(fs.readFileSync(`${spec}/${file}`, "UTF-8"))
-        json.forEach(a => {
-          it(a.name, function(done) {
-            enrich(a.input).then(json => {
-              try {
-                expect(json).deep.equal(a.output);
-                done();
-              } catch (e) {
-                done(e);
-              }
-            }).catch(e2 => {
-              done(e2);
+describe("imi-enrichment-address#main", function () {
+  describe("spec", function () {
+    fs.readdirSync(spec)
+      .filter((file) => file.match(/json$/))
+      .forEach((file) => {
+        describe(file, function () {
+          const json = JSON.parse(fs.readFileSync(`${spec}/${file}`, "UTF-8"));
+          json.forEach((a) => {
+            it(a.name, function (done) {
+              enrich(a.input)
+                .then((json) => {
+                  try {
+                    expect(json).deep.equal(a.output);
+                    done();
+                  } catch (e) {
+                    done(e);
+                  }
+                })
+                .catch((e2) => {
+                  done(e2);
+                });
             });
           });
         });
       });
-    });
   });
-
 });
